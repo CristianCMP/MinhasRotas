@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MinhasRotas</string>
+    <string name="title_activity_view_maps">ViewMaps</string>
 </resources>

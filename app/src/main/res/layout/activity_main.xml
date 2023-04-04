@@ -4,15 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.ViewHome">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Rotas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="409dp"
+        android:layout_height="354dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="92dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnNovo"
+        android:layout_width="393dp"
+        android:layout_height="43dp"
+        android:text="Nova rota"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="509dp" />
+
+    <Button
+        android:id="@+id/btnMostrar"
+        android:layout_width="393dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="28dp"
+        android:text="Mostrar Maps"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNovo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
