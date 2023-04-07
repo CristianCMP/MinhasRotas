@@ -2,9 +2,12 @@ package com.example.minhasrotas.view;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 
 import com.example.minhasrotas.R;
+import com.example.minhasrotas.entities.Ponto;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -12,6 +15,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.minhasrotas.databinding.ActivityViewMapsBinding;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 public class ViewMaps extends FragmentActivity implements OnMapReadyCallback {
 
@@ -43,10 +49,24 @@ public class ViewMaps extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Bundle bundle = getIntent().getExtras();
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        int idRota = bundle.getInt("idRota");
+
+        ArrayList<Ponto> listaPontos = new ArrayList<>();
+        //Consulta no banco os pontos e preenche listaPontos
+
+
+        PolylineOptions rota = new PolylineOptions();
+        rota.color(Color.RED);
+        rota.width(5);
+
+        listaPontos.forEach( x ->{
+            LatLng latlong = new LatLng(x.getLatitude(), x.getLatitude());
+            rota.add(latlong);
+            mMap.addMarker(new MarkerOptions().position(latlong));
+        });
+
+        mMap.addPolyline(rota);
     }
 }

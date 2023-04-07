@@ -2,22 +2,22 @@ package com.example.minhasrotas.entities;
 
 public final class Ponto {
 
-    private final String latitude;
-    private final String longitude;
+    private final double latitude;
+    private final double longitude;
 
     private final Rota rota;
 
-    public Ponto(String latitude, String longitude, Rota rota) {
+    public Ponto(double latitude, double longitude, Rota rota) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.rota = rota;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 }
