@@ -1,92 +1,87 @@
 package com.example.minhasrotas.view;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.minhasrotas.R;
+import com.example.minhasrotas.database.DatabaseController;
 import com.example.minhasrotas.entities.Ponto;
-import com.example.minhasrotas.entities.Rota;
 
-import java.sql.SQLOutput;
+public class ViewPontos extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
-public class ViewPontos extends AppCompatActivity implements View.OnClickListener,LocationListener{
+    private Button btnParar;
+    private TextView feedback;
+    private int rotaId;
+    private int registers = 0;
 
-    private Button btnParar = null;
-
-    private Rota rota = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pontos);
 
+        //instância objetos
+        btnParar = findViewById(R.id.btnParar);
+        feedback = findViewById(R.id.textView5);
 
+        //get rota id
         Bundle bundle = getIntent().getExtras();
+        rotaId = bundle.getInt("rotaId");
 
-        int idRota = bundle.getInt("idRota");
+        //verifica se contem a permissão e define as configurações para pegar as localizações
+        requestLocation();
 
-        rota = new Rota();
-
-        //remover
-        rota.setNome("TESTE");
-        rota.setDescricao("DDD");
-        rota.setId(1);
-
-       LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            return;
-        }
-        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
-
-        System.out.println("star");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        //ver para pegar a localização
-                        onLocationChanged(new Location("gps"));
-                        Thread.sleep(30000); // dorme por 30
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
-        btnParar = (Button) findViewById(R.id.btnParar);
-
-        btnParar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewPontos.this, ViewHome.class);
-                startActivity(intent);
-            }
+        btnParar.setOnClickListener(view -> {
+            LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            mlocManager.removeUpdates(this);
+            Intent intent = new Intent(ViewPontos.this, ViewHome.class);
+            startActivity(intent);
+            finish();
         });
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Ponto ponto = new Ponto(location.getLatitude(),location.getLongitude(), rota);
-        // salvar ponto
+        Ponto ponto = new Ponto(rotaId, location.getLatitude(), location.getLongitude());
+        registers++;
+
+        //carrega o banco
+        DatabaseController crud = new DatabaseController(getBaseContext());
+        crud.insertPonto(ponto);
+
+        feedback.setText("Registros realizados: " + registers + "\n" + ponto);
     }
 
     @Override
     public void onClick(View view) {
 
     }
+
+    private void requestLocation() {
+        LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        int fineLocationAccess = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int coarseLocationAccess = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (fineLocationAccess != PERMISSION_GRANTED && coarseLocationAccess != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 2, this::onLocationChanged);
+    }
+
 }

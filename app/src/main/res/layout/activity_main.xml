@@ -9,43 +9,55 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
         android:text="Rotas"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#673AB7"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="409dp"
-        android:layout_height="354dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="92dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNovo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnNovo"
-        android:layout_width="393dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="63dp"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:text="Nova rota"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDeleteAll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list" />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnMostrar"
-        android:layout_width="393dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="28dp"
-        android:text="Mostrar Maps"
+        android:id="@+id/buttonDeleteAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="133dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FF0000"
+        android:foregroundTint="#FF0000"
+        android:text="Deletar tudo"
+        app:iconTint="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnNovo" />
+        app:rippleColor="#FF0000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

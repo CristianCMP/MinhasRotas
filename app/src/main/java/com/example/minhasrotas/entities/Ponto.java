@@ -2,15 +2,27 @@ package com.example.minhasrotas.entities;
 
 public final class Ponto {
 
+    private int rotaId;
     private final double latitude;
     private final double longitude;
 
-    private final Rota rota;
-
-    public Ponto(double latitude, double longitude, Rota rota) {
+    public Ponto(int rotaId, double latitude, double longitude) {
+        this.rotaId = rotaId;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.rota = rota;
+    }
+
+    @Override
+    public String toString() {
+        return "Ponto{" +
+                "rotaId=" + rotaId +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public int getRotaId() {
+        return rotaId;
     }
 
     public double getLatitude() {

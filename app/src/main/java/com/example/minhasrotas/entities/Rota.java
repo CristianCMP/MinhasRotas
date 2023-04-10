@@ -3,6 +3,7 @@ package com.example.minhasrotas.entities;
 import java.util.Objects;
 
 public class Rota {
+
     private int id;
     private String nome;
     private String descricao;
@@ -11,6 +12,12 @@ public class Rota {
     }
 
     public Rota(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    public Rota(int id, String nome, String descricao) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
     }
@@ -37,6 +44,15 @@ public class Rota {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "Rota{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
     }
 
     @Override
